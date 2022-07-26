@@ -14,17 +14,14 @@ export default function authMiddlewares(
 ) {
 	const { authorization } = req.headers;
 
-	if (!authorization) {
+	if (!authorization)
 		return res.status(401).json({ error: "Not authorized!" });
-	}
 
 	const token = authorization.replace("Bearer", "").trim();
 
 	try {
 		const data = jwt.verify(token, "secret");
-
 		const { id } = data as TokenPayload;
-
 		req.userId = id;
 
 		return next;

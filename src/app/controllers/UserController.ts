@@ -12,12 +12,10 @@ class UserController {
 		try {
 			const repository = getRepository(User);
 			const { email, password } = req.body;
-
 			const userExists = await repository.findOne({ where: { email } });
 
-			if (userExists) {
+			if (userExists)
 				return res.status(409);
-			}
 
 			const user = repository.create({ email, password });
 			await repository.save(user);
